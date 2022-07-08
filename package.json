@@ -1,6 +1,7 @@
 {
 	"name": "vscode-window-mode",
 	"displayName": "vscode-window-mode",
+	"publisher": "FFengIll",
 	"description": "",
 	"version": "0.0.2",
 	"engines": {
