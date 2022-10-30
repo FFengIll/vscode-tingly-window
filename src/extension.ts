@@ -2,6 +2,8 @@
 import * as vscode from 'vscode';
 
 let statusBarItem: vscode.StatusBarItem;
+const modes = ['L', 'LR', 'N/A'];
+var current = 0;
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('active: window mode');
@@ -20,39 +22,26 @@ export function activate(context: vscode.ExtensionContext) {
     var switchModeDisposal = vscode.commands.registerCommand(
         commandId,
         async () => {
-            let config = vscode.workspace.getConfiguration('windowMode');
-            let mode: any = config.get('mode');
-            let currentMode: number = config.get('current') || 0;
-            let nextMode = currentMode;
-            let target = null;
-            if (mode.length > 0) {
-                nextMode = (currentMode + 1) % mode.length;
-                target = mode[nextMode];
-            } else {
-                nextMode = (currentMode + 1) % 2;
-                target = ['all', 'none'][nextMode];
-            }
+            let name = null;
+            let next = (current + 1) % modes.length;
+            name = modes[next];
+            updateStatusBarItem(name);
 
-            await config.update(
-                'current',
-                nextMode,
-                vscode.ConfigurationTarget.Workspace
-            );
-            switch (target) {
-                case null:
-                    break;
-                case 'all':
+            current = next;
+
+            switch (name) {
+                case 'LR':
                     vscode.commands.executeCommand(
                         'workbench.action.focusSideBar'
                     );
                     vscode.commands.executeCommand(
-                        'workbench.action.focusPanel'
-                    );
-                    vscode.commands.executeCommand(
                         'workbench.action.focusAuxiliaryBar'
                     );
+                    vscode.commands.executeCommand(
+                        'workbench.action.focusPanel'
+                    );
                     break;
-                case 'none':
+                case 'N/A':
                     vscode.commands.executeCommand(
                         'workbench.action.closeSidebar'
                     );
@@ -63,9 +52,20 @@ export function activate(context: vscode.ExtensionContext) {
                         'workbench.action.closeAuxiliaryBar'
                     );
                     break;
-                case 'sidebar':
+                case 'L':
                     vscode.commands.executeCommand(
                         'workbench.action.focusSideBar'
+                    );
+                    vscode.commands.executeCommand(
+                        'workbench.action.closeAuxiliaryBar'
+                    );
+                    vscode.commands.executeCommand(
+                        'workbench.action.closePanel'
+                    );
+                    break;
+                case 'R':
+                    vscode.commands.executeCommand(
+                        'workbench.action.closeSideBar'
                     );
                     vscode.commands.executeCommand(
                         'workbench.action.focusAuxiliaryBar'
@@ -88,12 +88,12 @@ export function activate(context: vscode.ExtensionContext) {
     //     vscode.window.onDidChangeTextEditorSelection(updateStatusBarItem)
     // );
 
-    updateStatusBarItem();
+    updateStatusBarItem('N/A');
 }
 
-function updateStatusBarItem() {
+function updateStatusBarItem(mode: string) {
     // show
-    statusBarItem.text = 'WindowMode';
+    statusBarItem.text = `Window: ${mode}`;
     statusBarItem.show();
 }
 
