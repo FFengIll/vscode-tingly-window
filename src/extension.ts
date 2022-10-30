@@ -81,12 +81,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     // register some listener that make sure the status bar
     // item always up-to-date
-    context.subscriptions.push(
-        vscode.window.onDidChangeActiveTextEditor(updateStatusBarItem)
-    );
-    context.subscriptions.push(
-        vscode.window.onDidChangeTextEditorSelection(updateStatusBarItem)
-    );
+    // context.subscriptions.push(
+    //     vscode.window.onDidChangeActiveTextEditor(updateStatusBarItem)
+    // );
+    // context.subscriptions.push(
+    //     vscode.window.onDidChangeTextEditorSelection(updateStatusBarItem)
+    // );
 
     updateStatusBarItem();
 }
