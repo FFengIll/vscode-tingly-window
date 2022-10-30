@@ -1,23 +1,24 @@
 'use strict';
-import { stat } from 'fs';
 import * as vscode from 'vscode';
-import { TextEditorSelectionChangeKind } from 'vscode';
+
+let statusBarItem: vscode.StatusBarItem;
 
 export function activate(context: vscode.ExtensionContext) {
+    console.log('active: window mode');
+
+    var commandId = 'vscode-window-mode.switch';
+
     // status bar
-    var statusBarItem = vscode.window.createStatusBarItem(
+    statusBarItem = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left,
         -100
     );
-    statusBarItem.text = 'WindowMode';
-    statusBarItem.command = 'vscode-window-mode.switch';
+    statusBarItem.command = commandId;
     context.subscriptions.push(statusBarItem);
-
-    statusBarItem.show();
 
     // action
     var switchModeDisposal = vscode.commands.registerCommand(
-        'vscode-window-mode.switch',
+        commandId,
         async () => {
             let config = vscode.workspace.getConfiguration('windowMode');
             let mode: any = config.get('mode');
@@ -76,8 +77,24 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
     );
-
     context.subscriptions.push(switchModeDisposal);
+
+    // register some listener that make sure the status bar
+    // item always up-to-date
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor(updateStatusBarItem)
+    );
+    context.subscriptions.push(
+        vscode.window.onDidChangeTextEditorSelection(updateStatusBarItem)
+    );
+
+    updateStatusBarItem();
+}
+
+function updateStatusBarItem() {
+    // show
+    statusBarItem.text = 'WindowMode';
+    statusBarItem.show();
 }
 
 export function deactivate() {}
