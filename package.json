@@ -23,7 +23,17 @@
                 "command": "vscode-window-mode.switch",
                 "title": "switch"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "windowMode",
+            "properties": {
+                "windowMode.current": {
+                    "type": "int",
+                    "default": 0,
+                    "description": ""
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

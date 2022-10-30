@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
         async () => {
             let config = vscode.workspace.getConfiguration('windowMode');
             let mode: any = config.get('mode');
-            let currentMode: number = config.get('currentMode') || 0;
+            let currentMode: number = config.get('current') || 0;
             let nextMode = currentMode;
             let target = null;
             if (mode.length > 0) {
@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             await config.update(
-                'currentMode',
+                'current',
                 nextMode,
                 vscode.ConfigurationTarget.Workspace
             );
