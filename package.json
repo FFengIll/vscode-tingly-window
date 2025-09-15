@@ -14,7 +14,9 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "onCommand:vscode-window-mode.switch",
+        "onCommand:vscode-window-mode.fullWindow",
+        "onCommand:vscode-window-mode.showPanels"
     ],
     "main": "./out/extension.js",
     "contributes": {
