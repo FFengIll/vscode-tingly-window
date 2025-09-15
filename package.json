@@ -22,8 +22,30 @@
             {
                 "command": "vscode-window-mode.switch",
                 "title": "switch"
+            },
+            {
+                "command": "vscode-window-mode.fullWindow",
+                "title": "Full Window"
+            },
+            {
+                "command": "vscode-window-mode.showPanels",
+                "title": "Show Panels"
             }
-        ]
+        ],
+        "menus": {
+            "editor/title/context": [
+                {
+                    "command": "vscode-window-mode.fullWindow",
+                    "group": "navigation@1000",
+                    "when": "!windowModeIsNA"
+                },
+                {
+                    "command": "vscode-window-mode.showPanels",
+                    "group": "navigation@1000",
+                    "when": "windowModeIsNA"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -34,16 +56,15 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@types/vscode": "^1.67.0",
-        "@types/glob": "^7.2.0",
-        "@types/mocha": "^9.1.0",
-        "@types/node": "14.x",
-        "@typescript-eslint/eslint-plugin": "^5.12.1",
-        "@typescript-eslint/parser": "^5.12.1",
-        "eslint": "^8.9.0",
-        "glob": "^7.2.0",
-        "mocha": "^9.2.1",
-        "typescript": "^4.5.5",
-        "@vscode/test-electron": "^2.1.2"
+        "@types/mocha": "^9.1.1",
+        "@types/node": "~14.18.63",
+        "@types/vscode": "^1.104.0",
+        "@typescript-eslint/eslint-plugin": "^8.43.0",
+        "@typescript-eslint/parser": "^8.43.0",
+        "@vscode/test-electron": "^2.5.2",
+        "eslint": "^9.35.0",
+        "glob": "^11.0.3",
+        "mocha": "^9.2.2",
+        "typescript": "^4.9.5"
     }
 }
