@@ -18,7 +18,8 @@
         "onCommand:tingly-window.switch",
         "onCommand:tingly-window.fullWindow",
         "onCommand:tingly-window.showPanels",
-        "*"
+        "onEditSession:file",
+        "onStartupFinished"
     ],
     "main": "./out/extension.js",
     "contributes": {
