@@ -8,9 +8,9 @@ var current = 0;
 export function activate(context: vscode.ExtensionContext) {
     console.log('active: window mode');
 
-    var commandId = 'vscode-window-mode.switch';
-    var fullWindowCommandId = 'vscode-window-mode.fullWindow';
-    var showPanelsCommandId = 'vscode-window-mode.showPanels';
+    var commandId = 'tingly-window.switch';
+    var fullWindowCommandId = 'tingly-window.fullWindow';
+    var showPanelsCommandId = 'tingly-window.showPanels';
 
     // status bar
     statusBarItem = vscode.window.createStatusBarItem(

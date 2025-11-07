@@ -1,48 +1,48 @@
 {
-    "name": "vscode-window-mode",
-    "displayName": "vscode-window-mode",
-    "publisher": "FFengIll",
+    "name": "tingly-window",
+    "displayName": "Tingly Window",
+    "publisher": "Tingly-Dev",
     "description": "",
     "version": "0.3.0",
     "engines": {
         "vscode": "^1.67.0"
     },
     "repository": {
-        "url": "https://github.com/FFengIll/vscode-window-mode"
+        "url": "https://github.com/FFengIll/vscode-tingly-window"
     },
     "categories": [
         "Other"
     ],
     "activationEvents": [
-        "onCommand:vscode-window-mode.switch",
-        "onCommand:vscode-window-mode.fullWindow",
-        "onCommand:vscode-window-mode.showPanels"
+        "onCommand:tingly-window.switch",
+        "onCommand:tingly-window.fullWindow",
+        "onCommand:tingly-window.showPanels"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "vscode-window-mode.switch",
+                "command": "tingly-window.switch",
                 "title": "switch"
             },
             {
-                "command": "vscode-window-mode.fullWindow",
+                "command": "tingly-window.fullWindow",
                 "title": "Full Window"
             },
             {
-                "command": "vscode-window-mode.showPanels",
+                "command": "tingly-window.showPanels",
                 "title": "Show Panels"
             }
         ],
         "menus": {
             "editor/title/context": [
                 {
-                    "command": "vscode-window-mode.fullWindow",
+                    "command": "tingly-window.fullWindow",
                     "group": "navigation@1000",
                     "when": "!windowModeIsNA"
                 },
                 {
-                    "command": "vscode-window-mode.showPanels",
+                    "command": "tingly-window.showPanels",
                     "group": "navigation@1000",
                     "when": "windowModeIsNA"
                 }
