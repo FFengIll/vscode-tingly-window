@@ -11,42 +11,66 @@
         "url": "https://github.com/FFengIll/vscode-tingly-window"
     },
     "categories": [
+        "Visualization",
         "Other"
     ],
     "activationEvents": [
         "onCommand:tingly-window.switch",
         "onCommand:tingly-window.fullWindow",
-        "onCommand:tingly-window.showPanels"
+        "onCommand:tingly-window.showPanels",
+        "*"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
                 "command": "tingly-window.switch",
-                "title": "switch"
+                "title": "Tingly Window: Switch Mode"
             },
             {
                 "command": "tingly-window.fullWindow",
-                "title": "Full Window"
+                "title": "Tingly Window: Full Window"
             },
             {
                 "command": "tingly-window.showPanels",
-                "title": "Show Panels"
+                "title": "Tingly Window: Show Panels"
             }
         ],
         "menus": {
             "editor/title/context": [
                 {
                     "command": "tingly-window.fullWindow",
-                    "group": "navigation@1000",
-                    "when": "!windowModeIsNA"
+                    "group": "navigation@1000"
                 },
                 {
                     "command": "tingly-window.showPanels",
-                    "group": "navigation@1000",
-                    "when": "windowModeIsNA"
+                    "group": "navigation@1000"
                 }
             ]
+        },
+        "configuration": {
+            "title": "SelectLine Status Bar",
+            "properties": {
+                "selectline.displayFormat": {
+                    "type": "string",
+                    "default": "Selected %d Lines",
+                    "description": "Display format of selected lines. The format can use node.js util.format. Argument into display format is line count only. You can display with octicon like $(three-bars) Selected line: %d."
+                },
+                "selectline.alignment": {
+                    "type": "string",
+                    "enum": [
+                        "left",
+                        "right"
+                    ],
+                    "default": "left",
+                    "description": "Show on the left or right in the status bar."
+                },
+                "selectline.statusbarPriority": {
+                    "type": "number",
+                    "default": 100,
+                    "description": "The priority of display in the status bar. Higher value means shown the left."
+                }
+            }
         }
     },
     "scripts": {
