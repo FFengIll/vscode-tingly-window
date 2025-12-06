@@ -4,10 +4,17 @@ export class WindowManager {
     private statusBarItem: vscode.StatusBarItem;
     private current: number;
     private readonly modes: string[];
+    private readonly modeDescriptions: { [key: string]: string };
 
     constructor() {
-        this.modes = ['L', 'LR', 'N/A'];
-        this.current = 0;
+        this.modes = ['L', 'LR', 'FULL'];
+        this.current = 2; // 默认为 FULL
+
+        this.modeDescriptions = {
+            'L': 'Left - Show only left sidebar',
+            'LR': 'Left+Right - Show both sidebars and panels',
+            'FULL': 'Full - Hide all sidebars and panels'
+        };
 
         this.statusBarItem = vscode.window.createStatusBarItem(
             vscode.StatusBarAlignment.Left,
@@ -30,26 +37,34 @@ export class WindowManager {
     }
 
     public async setFullWindowMode(): Promise<void> {
-        this.updateStatusBarItem('N/A');
-        this.current = 2; // N/A在modes中的索引
-        await this.handleSwitchMode('N/A');
+        this.updateStatusBarItem('FULL');
+        this.current = this.modes.indexOf('FULL');
+        await this.handleSwitchMode('FULL');
         await vscode.commands.executeCommand('setContext', 'windowModeIsNA', true);
     }
 
     public async setShowPanelsMode(): Promise<void> {
         this.updateStatusBarItem('LR');
-        this.current = 1; // LR在modes中的索引
+        this.current = this.modes.indexOf('LR');
         await this.handleSwitchMode('LR');
         await vscode.commands.executeCommand('setContext', 'windowModeIsNA', false);
     }
 
     public initializeMode(): void {
-        this.updateStatusBarItem('N/A');
+        this.current = this.modes.indexOf('FULL');
+        this.updateStatusBarItem('FULL');
         vscode.commands.executeCommand('setContext', 'windowModeIsNA', false);
     }
 
     private updateStatusBarItem(mode: string): void {
-        this.statusBarItem.text = `Window: ${mode}`;
+        const modeIcons: { [key: string]: string } = {
+            'L': '$(layout-sidebar-left)',
+            'LR': '$(layout-centered)',
+            'FULL': '$(layout-menubar)'
+        };
+
+        this.statusBarItem.text = `${modeIcons[mode]} Window: ${mode}`;
+        this.statusBarItem.tooltip = `Current: ${this.modeDescriptions[mode] || mode}\nClick to cycle window mode`;
         this.statusBarItem.show();
     }
 
@@ -60,7 +75,7 @@ export class WindowManager {
                 await vscode.commands.executeCommand('workbench.action.focusAuxiliaryBar');
                 await vscode.commands.executeCommand('workbench.action.focusPanel');
                 break;
-            case 'N/A':
+            case 'FULL':
                 await vscode.commands.executeCommand('workbench.action.closeSidebar');
                 await vscode.commands.executeCommand('workbench.action.closePanel');
                 await vscode.commands.executeCommand('workbench.action.closeAuxiliaryBar');
@@ -75,6 +90,36 @@ export class WindowManager {
                 await vscode.commands.executeCommand('workbench.action.focusAuxiliaryBar');
                 await vscode.commands.executeCommand('workbench.action.closePanel');
                 break;
+        }
+    }
+
+    public async openFolderInCurrentWindow(): Promise<void> {
+        const options: vscode.OpenDialogOptions = {
+            canSelectMany: false,
+            openLabel: 'Open Folder in Current Window',
+            canSelectFolders: true,
+            canSelectFiles: false
+        };
+
+        const folderUri = await vscode.window.showOpenDialog(options);
+
+        if (folderUri && folderUri[0]) {
+            try {
+                // Use VSCode command to open folder in current window (replace window)
+                await vscode.commands.executeCommand(
+                    'vscode.openFolder',
+                    folderUri[0],
+                    { forceReuseWindow: true, forceNewWindow: false }
+                );
+
+                vscode.window.showInformationMessage(
+                    `Opened folder in current window: ${folderUri[0].fsPath}`
+                );
+            } catch (error) {
+                vscode.window.showErrorMessage(
+                    `Failed to open folder: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
         }
     }
 
