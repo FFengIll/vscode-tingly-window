@@ -123,6 +123,36 @@ export class WindowManager {
         }
     }
 
+    public async openFolderInNewWindow(): Promise<void> {
+        const options: vscode.OpenDialogOptions = {
+            canSelectMany: false,
+            openLabel: 'Open Folder in New Window',
+            canSelectFolders: true,
+            canSelectFiles: false
+        };
+
+        const folderUri = await vscode.window.showOpenDialog(options);
+
+        if (folderUri && folderUri[0]) {
+            try {
+                // Use VSCode command to open folder in new window
+                await vscode.commands.executeCommand(
+                    'vscode.openFolder',
+                    folderUri[0],
+                    { forceReuseWindow: false, forceNewWindow: true }
+                );
+
+                vscode.window.showInformationMessage(
+                    `Opened folder in new window: ${folderUri[0].fsPath}`
+                );
+            } catch (error) {
+                vscode.window.showErrorMessage(
+                    `Failed to open folder: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
+    }
+
     public dispose(): void {
         this.statusBarItem.dispose();
     }

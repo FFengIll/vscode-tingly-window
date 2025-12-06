@@ -12,7 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
     const commandId = 'tingly-window.switch';
     const fullWindowCommandId = 'tingly-window.fullWindow';
     const showPanelsCommandId = 'tingly-window.showPanels';
-    const openFolderCommandId = 'tingly-window.openFolderInCurrentWindow';
+    const openFolderInCurrentCommandId = 'tingly-window.openFolderInCurrentWindow';
+    const openFolderInNewCommandId = 'tingly-window.openFolderInNewWindow';
 
     // window manager
     windowManager = new WindowManager();
@@ -53,12 +54,21 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Open Folder in Current Window 命令
     const openFolderDisposal = vscode.commands.registerCommand(
-        openFolderCommandId,
+        openFolderInCurrentCommandId,
         async () => {
             await windowManager.openFolderInCurrentWindow();
         }
     );
     context.subscriptions.push(openFolderDisposal);
+
+    // Open Folder in New Window 命令
+    const openFolderInNewWindowDisposal = vscode.commands.registerCommand(
+        openFolderInNewCommandId,
+        async () => {
+            await windowManager.openFolderInNewWindow();
+        }
+    );
+    context.subscriptions.push(openFolderInNewWindowDisposal);
 
     // 初始化
     windowManager.initializeMode();

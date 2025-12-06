@@ -40,6 +40,10 @@
             {
                 "command": "tingly-window.openFolderInCurrentWindow",
                 "title": "Tingly Window: Open Folder in Current Window"
+            },
+              {
+                "command": "tingly-window.openFolderInNewWindow",
+                "title": "Tingly Window: Open Folder in New Window"
             }
         ],
         "menus": {
