@@ -18,6 +18,7 @@
         "onCommand:tingly-window.switch",
         "onCommand:tingly-window.fullWindow",
         "onCommand:tingly-window.showPanels",
+        "onCommand:tingly-window.openFolderInCurrentWindow",
         "onEditSession:file",
         "onStartupFinished"
     ],
@@ -35,6 +36,10 @@
             {
                 "command": "tingly-window.showPanels",
                 "title": "Tingly Window: Show Panels"
+            },
+            {
+                "command": "tingly-window.openFolderInCurrentWindow",
+                "title": "Tingly Window: Open Folder in Current Window"
             }
         ],
         "menus": {
