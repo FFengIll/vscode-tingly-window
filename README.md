@@ -44,6 +44,9 @@ VSCode extension for managing window layouts and UI elements.
 
 ## Changelog
 
+### 0.25.1207
+- New "Open Folder in New Window" command
+
 ### v0.25.1206
 - New "Open Folder in Current Window" command
 - Enhanced window status bar icons
