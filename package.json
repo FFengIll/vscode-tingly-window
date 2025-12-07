@@ -3,7 +3,7 @@
     "displayName": "Tingly Window",
     "publisher": "Tingly-Dev",
     "description": "",
-    "version": "0.25.1206",
+    "version": "0.25.1207",
     "engines": {
         "vscode": "^1.80.0"
     },
