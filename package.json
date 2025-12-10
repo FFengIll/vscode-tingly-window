@@ -3,7 +3,7 @@
     "displayName": "Tingly Window",
     "publisher": "Tingly-Dev",
     "description": "",
-    "version": "0.25.1207",
+    "version": "0.25.121013",
     "engines": {
         "vscode": "^1.80.0"
     },
@@ -41,22 +41,13 @@
                 "command": "tingly-window.openFolderInCurrentWindow",
                 "title": "Tingly Window: Open Folder in Current Window"
             },
-              {
+            {
                 "command": "tingly-window.openFolderInNewWindow",
                 "title": "Tingly Window: Open Folder in New Window"
             }
         ],
         "menus": {
-            "editor/title/context": [
-                {
-                    "command": "tingly-window.fullWindow",
-                    "group": "navigation@1000"
-                },
-                {
-                    "command": "tingly-window.showPanels",
-                    "group": "navigation@1000"
-                }
-            ]
+            "editor/title/context": []
         },
         "configuration": {
             "title": "SelectLine Status Bar",
